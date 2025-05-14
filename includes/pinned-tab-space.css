@@ -1,0 +1,4 @@
+/* 10 is the number of tabs to show. 5 by default */
+#vertical-pinned-tabs-container {
+    max-height: calc(20 * var(--tabstrip-min-height) + var(--space-large)) !important;
+}
