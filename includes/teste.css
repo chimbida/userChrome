@@ -1,0 +1,345 @@
+:root {
+  --tab-min-height: 28px !important;
+  --tab-group-line-thickness: 1px !important;
+}
+
+/* Adjust window color (macOS) */
+.browser-toolbox-background {
+  @media (-moz-platform: macos) and -moz-pref("browser.theme.native-theme") {
+    :root[customtitlebar]:not([lwtheme], [macOSNativeFullscreen]) & {
+      background-color: var(--toolbox-bgcolor) !important;
+    }
+  }
+}
+
+/* Tab group */
+.tab-group-label {
+  display: flex !important;
+  align-items: center;
+  gap: var(--tab-icon-end-margin);
+  padding-inline: 8px 4px !important;
+  padding-block: 6px !important;
+  margin-block: 0 !important;
+  background: color-mix(
+    in srgb,
+    light-dark(var(--tab-group-color), var(--tab-group-color-invert)),
+    transparent 85%
+  ) !important;
+  color: light-dark(
+    var(--tab-group-color),
+    var(--tab-group-color-invert)
+  ) !important;
+  min-height: var(--tab-min-height) !important;
+}
+
+#tabbrowser-tabs[orient="horizontal"] .tab-group-label {
+  max-width: unset !important;
+}
+
+tab-group .tab-group-label::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  background-image: url("chrome://global/skin/icons/folder.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  -moz-context-properties: fill;
+  fill: currentColor;
+  padding: 0;
+  align-self: center;
+  flex-shrink: 0;
+}
+
+.tab-group-label {
+  tab-group[collapsed] > .tab-group-label-container > & {
+    outline: none !important;
+  }
+}
+
+/* Smaller tab */
+.tab-label {
+  margin-block: 0 !important;
+}
+
+#tabbrowser-tabs[orient="horizontal"] .tab-close-button {
+  width: 20px !important;
+  height: 20px !important;
+  padding: 4px !important;
+}
+
+/* Remove shadow on active tab */
+#tabstoolbar #firefox-view-button[open] > .toolbarbutton-icon,
+.tab-background:is([selected], [multiselected]) {
+  box-shadow: none !important;
+}
+
+/* Wider tab mask */
+.tabbrowser-tab {
+  --tab-label-mask-size: 4em !important;
+}
+
+/* Show close button on hover */
+.tabbrowser-tab:not([pinned]):hover .tab-close-button {
+  display: inline-flex !important;
+}
+
+.tab-secondary-label {
+  display: none !important;
+}
+
+/*  Disable gradient border  */
+#appMenu-fxa-separator {
+  border-image: none !important;
+}
+
+/*  Dialog background color  */
+@media not (forced-colors) {
+  :root[dialogroot] {
+    --in-content-page-background: color-mix(
+      in srgb,
+      currentColor 5%,
+      -moz-Dialog
+    ) !important;
+  }
+}
+
+/* Tab background color */
+#tabbrowser-tabpanels {
+  background: -moz-Dialog !important;
+}
+
+/* Private browsing label */
+.private-browsing-indicator-icon {
+  display: none !important;
+}
+
+.private-browsing-indicator-label {
+  background: #8000d7 !important;
+  padding: 3px 6px !important;
+  border-radius: 4px !important;
+  margin-block: 0 !important;
+  margin-inline: 0 !important;
+}
+
+/* Infobar */
+.infobar {
+  --info-bar-background-color: color-mix(
+    in srgb,
+    currentColor 12%,
+    -moz-Dialog
+  ) !important;
+}
+
+/* Sidebar */
+#sidebar-button:is(:active, [open], [checked]):not(:hover) .toolbarbutton-icon {
+  background-color: transparent !important;
+}
+
+#sidebar {
+  box-shadow: none !important;
+  background-color: -moz-Dialog !important;
+}
+
+/* Tab Group */
+tab-group[collapsed] .tab-group-label::before {
+  background-image: url("chrome://global/skin/icons/folder.svg");
+}
+
+tab-group .tab-group-label {
+  max-height: var(--tab-min-height) !important;
+}
+
+tab-group .tab-group-label::after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-image: url("chrome://global/skin/icons/arrow-left-12.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 14px;
+  -moz-context-properties: fill;
+  fill: currentColor;
+  border-radius: 4px;
+}
+
+tab-group .tab-group-label:hover::after {
+  background-color: color-mix(
+    in srgb,
+    light-dark(var(--tab-group-color), var(--tab-group-color-invert)),
+    transparent 85%
+  ) !important;
+}
+
+tab-group[collapsed] .tab-group-label::after {
+  background-image: url("chrome://global/skin/icons/arrow-right-12.svg");
+}
+
+.tab-group-line {
+  #tabbrowser-tabs[orient="horizontal"] tab-group:not([collapsed]) & {
+    bottom: 0 !important;
+  }
+}
+
+.tab-group-label-container {
+  #tabbrowser-tabs[orient="horizontal"] tab-group:not([collapsed]) > &::after {
+    bottom: 0 !important;
+  }
+}
+
+/* Vertical tab */
+@media -moz-pref("sidebar.verticalTabs") {
+  :root {
+    --tab-min-height: 32px !important;
+    --tab-group-line-thickness: 2px !important;
+  }
+
+  /* Remove unnecessary extra padding on the first pinned tab */
+  #vertical-pinned-tabs-container .tabbrowser-tab {
+    &:nth-child(1 of :not([hidden])) {
+      padding-block-start: 3px !important;
+    }
+  }
+
+  #nav-bar {
+    border-top: none !important;
+    padding-top: 2px !important;
+  }
+
+  #PersonalToolbar {
+    margin-bottom: 2px;
+  }
+
+  /* Rounded corner */
+  #tabbrowser-tabpanels::before {
+    content: "";
+    inset: -10px;
+    position: absolute;
+    border: 10px solid var(--toolbox-bgcolor) !important;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  #tabbrowser-tabpanels::after {
+    content: "";
+    inset: 0;
+    position: absolute;
+    z-index: 2 !important;
+    pointer-events: none;
+  }
+
+  /* Disable padding and rounded corner on full screen video */
+  #main-window:not([inFullscreen][inDOMFullscreen]) {
+    #tabbrowser-tabbox {
+      box-shadow: none !important;
+      outline: none !important;
+      padding-bottom: 6px !important;
+      padding-right: 6px !important;
+      overflow: hidden !important;
+    }
+
+    #tabbrowser-tabpanels::after {
+      border: 0.5px solid
+        light-dark(
+          color-mix(in srgb, currentColor 10%, transparent),
+          var(--border-color-deemphasized)
+        ) !important;
+      border-radius: 6px !important;
+    }
+
+    #tabbrowser-tabpanels::before {
+      border-radius: calc(2 * var(--border-radius-medium)) !important;
+    }
+  }
+
+  #vertical-tabs tab:not([pinned]) .tab-background {
+    margin-block: 0 !important;
+  }
+
+  #vertical-tabs tab .tab-background,
+  #tabs-newtab-button {
+    border-radius: var(--tab-border-radius) !important;
+  }
+
+  /* Reduce vertical spacing */
+  #vertical-tabs .tabbrowser-tab .tab-close-button {
+    margin-inline-end: -4px !important;
+  }
+
+  /* Tab group - vertical */
+  tab-group {
+    #tabbrowser-tabs[expanded] & {
+      margin-inline-start: 0 !important;
+    }
+  }
+
+  #tabbrowser-tabs[orient="vertical"][expanded] {
+    tab-group > :is(.tab-group-label-container, .tabbrowser-tab),
+    &[movingtab][movingtab-addToGroup]:not(
+        [movingtab-createGroup],
+        [movingtab-ungroup]
+      )
+      .tabbrowser-tab:is(:active, [multiselected]) {
+      margin-inline-start: 0 !important;
+    }
+  }
+
+  .tab-group-label {
+    margin-block: 0 !important;
+    padding-block: 0 !important;
+    width: 100% !important;
+    margin-inline: var(--tab-inner-inline-margin) !important;
+    min-width: var(--tab-collapsed-background-width) !important;
+    margin-block-end: 2px !important;
+    padding-right: 4px !important;
+  }
+
+  tab-group[collapsed] .tab-group-label::before {
+    background-image: url("chrome://global/skin/icons/folder.svg");
+  }
+
+  tab-group .tab-group-label::after {
+    width: 24px;
+    height: 24px;
+    background-image: url("chrome://global/skin/icons/arrow-up-12.svg");
+    align-self: center;
+    margin-inline: auto 0;
+  }
+
+  tab-group[collapsed] .tab-group-label::after {
+    background-image: url("chrome://global/skin/icons/arrow-down-12.svg");
+  }
+
+  .tab-group-label-container {
+    #tabbrowser-tabs[orient="vertical"] & {
+      margin-block-start: var(--space-xsmall) !important;
+      tab-group:not([collapsed]) > & {
+        padding-block-end: 0 !important;
+      }
+    }
+  }
+
+  .tab-group-label-container {
+    #tabbrowser-tabs:is([orient="horizontal"], [orient="vertical"])
+      tab-group
+      > &::after {
+      content: "" !important;
+      background-color: light-dark(
+        var(--tab-group-color),
+        var(--tab-group-color-invert)
+      ) !important;
+      position: absolute !important;
+      left: 0 !important;
+      border-radius: 0 var(--tab-group-line-thickness) 0 0 !important;
+    }
+  }
+
+  .tab-group-line {
+    #tabbrowser-tabs[orient="vertical"] & {
+      .tabbrowser-tab:last-of-type > .tab-stack > .tab-background > & {
+        border-radius: 0 0 var(--tab-group-line-thickness) 0 !important;
+      }
+      left: 0 !important;
+    }
+  }
+}
